@@ -2,7 +2,7 @@
 A game where you have to guess the subject matter of a chart.
 
 ## Contributing
-Building a running list of ideas in #1
+Building a running list of ideas in [Issue #1](https://github.com/decepulis/chart-guessing-game/issues/1)
 
 Open new issues for new feature ideas
 
