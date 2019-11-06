@@ -9,10 +9,7 @@ const WebFont = require("webfontloader");
 
 WebFont.load({
   google: {
-    families: [
-      "Playfair+Display:900i&display=swap",
-      "Open+Sans:600,800&display=swap"
-    ]
+    families: ["Playfair+Display:900i&display=swap"]
   },
   timeout: 5000
 });
