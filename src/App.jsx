@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from "react";
 import "./App.css";
 
+import games, { selectRandomGame } from "./games";
+
 import useAxios from "axios-hooks";
 import csv from "papaparse";
 import { LineChart, Line } from "recharts";
 
+const [gameKey, gameDetails] = selectRandomGame(games);
+
 function App() {
   const [graphData, setGraphData] = useState([]);
-  const [{ data, loading, error }, refetch] = useAxios(
-    "./data/trump-obama.csv"
-  );
+  const [{ data, loading }] = useAxios(`./data/${gameKey}.csv`);
 
   useEffect(() => {
     if (!loading) {
@@ -27,12 +29,11 @@ function App() {
           }
         },
         complete(results, _) {
-          console.log(results);
           setGraphData(results.data);
         }
       });
     }
-  }, [data, loading, error]);
+  }, [data, loading]);
 
   return (
     <>
@@ -40,10 +41,13 @@ function App() {
         <h1>Page Title!</h1>
       </header>
       <main>
-        <LineChart width={600} height={300} data={graphData}>
-          <Line type="monotone" stroke="red" dataKey="trump" />
-          <Line type="monotone" stroke="blue" dataKey="obama" />
-        </LineChart>
+        {!loading && (
+          <LineChart width={600} height={300} data={graphData}>
+            {gameDetails.columns.map(column => {
+              return <Line key={column} dataKey={column} />;
+            })}
+          </LineChart>
+        )}
       </main>
     </>
   );
