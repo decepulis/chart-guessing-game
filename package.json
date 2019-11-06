@@ -9,7 +9,9 @@
     "react": "^16.11.0",
     "react-dom": "^16.11.0",
     "react-scripts": "3.2.0",
-    "recharts": "^1.8.5"
+    "recharts": "^1.8.5",
+    "styled-components": "^4.4.1",
+    "webfontloader": "^1.6.28"
   },
   "scripts": {
     "start": "react-scripts start",

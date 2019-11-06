@@ -1,13 +1,33 @@
 import React from "react";
-import "./App.css";
-
+import styled from "styled-components";
 import ChartGame from "./components/ChartGame";
+
+const StyledMain = styled.main`
+  min-width: 100vw;
+  min-height: 100vh;
+  background-color: ${props => props.theme.primaryColor};
+  color: ${props => props.theme.black};
+`;
+
+const H1 = styled.h1`
+  font-family: "Playfair Display", serif;
+  font-weight: 900;
+  font-style: italic;
+  font-size: 3rem;
+  text-align: center;
+
+  margin: 0;
+  padding: 1rem 0;
+`;
 
 function App() {
   return (
-    <section style={{ maxWidth: "1024px", margin: "0 auto", padding: "1rem" }}>
+    <StyledMain>
+      <header>
+        <H1>Page Title!</H1>
+      </header>
       <ChartGame />
-    </section>
+    </StyledMain>
   );
 }
 
