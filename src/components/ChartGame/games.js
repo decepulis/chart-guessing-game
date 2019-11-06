@@ -9,7 +9,7 @@ filename.csv : {
 const games = {
   "trump-obama": {
     dateColumn: "Month",
-    columns: ["trump:", "obama:"],
+    columns: ["trump", "obama"],
     solutions: [
       "Trump v. Obama",
       "Donald Trump Barack Obama",
@@ -19,7 +19,7 @@ const games = {
   },
   "star-wars": {
     dateColumn: "Month",
-    columns: ["star wars:"],
+    columns: ["star wars"],
     solutions: [
       "Star Wars",
       "Revenge of the Sith The Force Awakens Rogue One The Last Jedi"
@@ -32,7 +32,7 @@ const games = {
   },
   "nintendo-wii": {
     dateColumn: "Month",
-    columns: ["Nintendo Wii:"],
+    columns: ["Nintendo Wii"],
     solutions: ["Nintendo Wii", "Wii"],
     hints: ["Entertainment", "Video Games", "Popular 2006 Game Console"]
   }
