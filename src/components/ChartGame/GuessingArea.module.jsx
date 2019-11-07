@@ -22,7 +22,7 @@ export const SubmitButton = styled.button`
 export const SolutionBox = styled.div`
   align-items: center;
   justify-content: center;
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
@@ -53,7 +53,7 @@ export const SolutionText = styled.span`
   font-style: italic;
   font-size: 10rem;
   @media only screen and (max-width: 575px) {
-    font-size: 6rem;
+    font-size: 20vw;
   }
 
   transition: transform 0.2s ease-in-out, opacity 0.1s ease-in-out;
