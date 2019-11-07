@@ -3,12 +3,6 @@ import PropTypes from "prop-types";
 import styled from "styled-components";
 import HintArea from "./HintArea";
 
-const HintSection = styled.div`
-  padding: 1em;
-  border: 4px solid ${props => props.theme.black};
-  text-align: center;
-`;
-
 const SubmitRow = styled.div`
   display: flex;
   flex-wrap: wrap;
@@ -17,13 +11,16 @@ const SubmitInput = styled.input`
   border: 4px solid ${props => props.theme.black};
   font-size: 1.25em;
   padding: 0.5em;
+  margin: 0;
   flex: 4 0 275px;
 `;
 const SubmitButton = styled.button`
+  cursor: pointer;
   background: white;
   border: 4px solid ${props => props.theme.black};
   font-size: 1.25em;
   padding: 0.5em;
+  margin: 0;
   flex: 1 0 auto;
 `;
 
@@ -39,22 +36,22 @@ const GuessingArea = ({ gameDetails }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <HintSection>
-        <HintArea hints={gameDetails.hints} />
-      </HintSection>
-      <SubmitRow>
-        <SubmitInput
-          placeholder="What search trend is this?"
-          type="text"
-          value={guess}
-          onChange={handleChangeGuess}
-        />
-        <SubmitButton type="submit">
-          {guess.length > 0 ? "Submit" : "Give Up"}
-        </SubmitButton>
-      </SubmitRow>
-    </form>
+    <section>
+      <HintArea hints={gameDetails.hints} />
+      <form onSubmit={handleSubmit}>
+        <SubmitRow>
+          <SubmitInput
+            placeholder="What search trend is this?"
+            type="text"
+            value={guess}
+            onChange={handleChangeGuess}
+          />
+          <SubmitButton type="submit">
+            {guess.length > 0 ? "Submit" : "Give Up"}
+          </SubmitButton>
+        </SubmitRow>
+      </form>
+    </section>
   );
 };
 
