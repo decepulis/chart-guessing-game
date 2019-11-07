@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useReducer } from "react";
 import styled from "styled-components";
 
 import ChartArea from "./components/ChartGame/ChartArea";
@@ -32,17 +32,54 @@ const H1 = styled.h1`
   margin: 0;
 `;
 
+const initialScore = {
+  points: 0,
+  total: 0,
+  correct: 0
+};
+
+const setScore = (state, action) => {
+  switch (action.type) {
+    case "correct":
+      return {
+        ...state,
+        points: (state.points += action.points),
+        total: (state.total += 1),
+        correct: (state.correct += 1)
+      };
+    case "incorrect":
+      return {
+        ...state,
+        total: (state.total += 1)
+      };
+    default:
+      return state;
+  }
+};
+
 function App() {
+  const [score, dispatchScore] = useReducer(setScore, initialScore);
+
   const [outcome, setOutcome] = useState([true, false]);
-  const [pending, correct] = outcome;
+  const [pending] = outcome;
 
   return (
     <StyledMain className={!pending && "gameOver"}>
-      <header style={{ textAlign: "center", padding: "1.5em 0" }}>
-        <H1>Page Title!</H1>
-        <small>Guess the search trend in the chart below.</small>
-      </header>
       <GameContainer>
+        <header style={{ textAlign: "center", padding: "1.5em 0" }}>
+          <H1>Page Title!</H1>
+          <p style={{ margin: 0 }}>
+            <small>Guess the search trend in the chart below.</small>
+          </p>
+          {score.total > 0 && (
+            <p style={{ margin: 0 }}>
+              <small>
+                {score.points}|
+                {((100 * score.correct) / score.total).toFixed(2)}%
+              </small>
+            </p>
+          )}
+        </header>
         <ChartArea
           filename={gameKey}
           dateColumn={gameDetails.dateColumn}
@@ -52,6 +89,7 @@ function App() {
           gameDetails={gameDetails}
           outcome={outcome}
           setOutcome={setOutcome}
+          dispatchScore={dispatchScore}
         />
       </GameContainer>
     </StyledMain>

@@ -30,7 +30,7 @@ export const SolutionBox = styled.div`
   display: flex;
   overflow: hidden;
   background-color: ${props =>
-    props.correct ? `hsla(120,100%,85%,0.8)` : `hsla(0,100%,85%,0.8)`};
+    props.success ? `hsla(120,100%,85%,0.8)` : `hsla(0,100%,85%,0.8)`};
 
   pointer-events: ${props => (props.acceptsClicks ? "auto" : "none")};
   cursor: pointer;

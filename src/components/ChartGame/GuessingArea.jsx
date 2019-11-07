@@ -13,10 +13,10 @@ import HintArea from "./HintArea";
 
 const SUCCESS_THRESHOLD = 0.66;
 
-const GuessingArea = ({ gameDetails, outcome, setOutcome }) => {
+const GuessingArea = ({ gameDetails, outcome, setOutcome, dispatchScore }) => {
   const { hints, solutions } = gameDetails;
   const [guess, setGuess] = useState("");
-  const [pending, correct] = outcome;
+  const [pending, success] = outcome;
 
   const handleSubmit = e => {
     e.preventDefault();
@@ -29,8 +29,10 @@ const GuessingArea = ({ gameDetails, outcome, setOutcome }) => {
 
     if (rating > SUCCESS_THRESHOLD) {
       setOutcome([false, true]);
+      dispatchScore({ type: "correct", points: 1 });
     } else {
       setOutcome([false, false]);
+      dispatchScore({ type: "incorrect" });
     }
   };
   const handleChangeGuess = e => {
@@ -56,7 +58,7 @@ const GuessingArea = ({ gameDetails, outcome, setOutcome }) => {
       <SolutionBox
         className={!pending && "visible"}
         acceptsClicks={!pending}
-        correct={correct}
+        success={success}
         onClick={() => {
           window.location.reload();
         }}
@@ -70,6 +72,7 @@ const GuessingArea = ({ gameDetails, outcome, setOutcome }) => {
 GuessingArea.propTypes = {
   outcome: PropTypes.array.isRequired,
   setOutcome: PropTypes.func.isRequired,
+  dispatchScore: PropTypes.func.isRequired,
   gameDetails: PropTypes.shape({
     dateColumn: PropTypes.string.isRequired,
     columns: PropTypes.array.isRequired,
