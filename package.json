@@ -5,11 +5,13 @@
   "dependencies": {
     "axios": "^0.19.0",
     "axios-hooks": "^1.6.0",
+    "date-fns": "^2.7.0",
     "papaparse": "^5.1.0",
     "react": "^16.11.0",
     "react-dom": "^16.11.0",
     "react-scripts": "3.2.0",
     "recharts": "^1.8.5",
+    "string-similarity": "^3.0.0",
     "styled-components": "^4.4.1",
     "webfontloader": "^1.6.28"
   },

@@ -84,30 +84,32 @@ export default function ChartArea({ filename, dateColumn, columns }) {
 
   return (
     <ChartContainer>
-      <ResponsiveContainer width="100%" height={350}>
-        <LineChart data={graphData}>
-          {columns.map((column, idx) => (
-            <Line
-              key={column}
-              dataKey={column}
-              dot={false}
-              strokeWidth={4}
-              stroke={idx === 0 ? theme.secondaryColor : theme.tertiaryColor}
-              type="monotone"
+      {graphData.length > 0 && (
+        <ResponsiveContainer width="100%" height={350}>
+          <LineChart data={graphData}>
+            {columns.map((column, idx) => (
+              <Line
+                key={column}
+                dataKey={column}
+                dot={false}
+                strokeWidth={4}
+                stroke={idx === 0 ? theme.secondaryColor : theme.tertiaryColor}
+                type="monotone"
+              />
+            ))}
+            <XAxis
+              dataKey={dateColumn}
+              stroke={theme.gray}
+              angle={-30}
+              dy={15}
+              dx={-5}
+              height={50}
             />
-          ))}
-          <XAxis
-            dataKey={dateColumn}
-            stroke={theme.gray}
-            angle={-30}
-            dy={15}
-            dx={-5}
-            height={50}
-          />
-          <YAxis stroke={theme.gray} width={30} />
-          <Tooltip content={<CustomTooltip />} />
-        </LineChart>
-      </ResponsiveContainer>
+            <YAxis stroke={theme.gray} width={30} />
+            <Tooltip content={<CustomTooltip />} />
+          </LineChart>
+        </ResponsiveContainer>
+      )}
       <p style={{ marginBottom: 0, color: theme.gray }}>
         <small>
           Data source:{" "}

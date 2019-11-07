@@ -1,46 +1,48 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import styled from "styled-components";
+import stringSimilarity from "string-similarity";
+
+import {
+  SubmitRow,
+  SubmitInput,
+  SubmitButton,
+  SolutionBox,
+  SolutionText
+} from "./GuessingArea.module";
 import HintArea from "./HintArea";
 
-const SubmitRow = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-`;
-const SubmitInput = styled.input`
-  border: 4px solid ${props => props.theme.black};
-  font-size: 1.25em;
-  padding: 0.5em;
-  margin: 0;
-  flex: 4 0 275px;
-`;
-const SubmitButton = styled.button`
-  cursor: pointer;
-  background: white;
-  border: 4px solid ${props => props.theme.black};
-  font-size: 1.25em;
-  padding: 0.5em;
-  margin: 0;
-  flex: 1 0 auto;
-`;
+const SUCCESS_THRESHOLD = 0.66;
 
-const GuessingArea = ({ gameDetails }) => {
+const GuessingArea = ({ gameDetails, outcome, setOutcome }) => {
+  const { hints, solutions } = gameDetails;
   const [guess, setGuess] = useState("");
+  const [pending, correct] = outcome;
 
   const handleSubmit = e => {
-    console.log("submit");
     e.preventDefault();
+
+    const similarity = stringSimilarity.findBestMatch(
+      guess.toLowerCase(),
+      gameDetails.solutions.map(solution => solution.toLowerCase())
+    );
+    const { rating } = similarity.bestMatch;
+
+    if (rating > SUCCESS_THRESHOLD) {
+      setOutcome([false, true]);
+    } else {
+      setOutcome([false, false]);
+    }
   };
   const handleChangeGuess = e => {
     setGuess(e.target.value);
   };
-
   return (
-    <section>
-      <HintArea hints={gameDetails.hints} />
+    <section style={{ paddingBottom: "1.5em" }}>
+      <HintArea hints={hints} />
       <form onSubmit={handleSubmit}>
         <SubmitRow>
           <SubmitInput
+            autoFocus
             placeholder="What search trend is this?"
             type="text"
             value={guess}
@@ -51,11 +53,23 @@ const GuessingArea = ({ gameDetails }) => {
           </SubmitButton>
         </SubmitRow>
       </form>
+      <SolutionBox
+        className={!pending && "visible"}
+        acceptsClicks={!pending}
+        correct={correct}
+        onClick={() => {
+          window.location.reload();
+        }}
+      >
+        <SolutionText>{solutions[0]}</SolutionText>
+      </SolutionBox>
     </section>
   );
 };
 
 GuessingArea.propTypes = {
+  outcome: PropTypes.array.isRequired,
+  setOutcome: PropTypes.func.isRequired,
   gameDetails: PropTypes.shape({
     dateColumn: PropTypes.string.isRequired,
     columns: PropTypes.array.isRequired,

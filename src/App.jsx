@@ -1,13 +1,27 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
-import ChartGame from "./components/ChartGame";
+
+import ChartArea from "./components/ChartGame/ChartArea";
+import GuessingArea from "./components/ChartGame/GuessingArea";
+
+import games, { selectRandomGame } from "./games";
+const [gameKey, gameDetails] = selectRandomGame(games);
+
+const GameContainer = styled.section`
+  max-width: 1024px;
+  margin: 0 auto;
+`;
 
 const StyledMain = styled.main`
   width: 100vw;
   min-height: 100vh;
   padding: 0 0.5em;
-  background-color: ${props => props.theme.primaryColor};
   color: ${props => props.theme.black};
+  background-color: ${props => props.theme.primaryColor};
+  &.gameOver {
+    background-color: #fff;
+  }
+  transition: background-color: 0.1s ease-in-out;
 `;
 
 const H1 = styled.h1`
@@ -19,13 +33,27 @@ const H1 = styled.h1`
 `;
 
 function App() {
+  const [outcome, setOutcome] = useState([true, false]);
+  const [pending, correct] = outcome;
+
   return (
-    <StyledMain>
+    <StyledMain className={!pending && "gameOver"}>
       <header style={{ textAlign: "center", padding: "1.5em 0" }}>
         <H1>Page Title!</H1>
         <small>Guess the search trend in the chart below.</small>
       </header>
-      <ChartGame />
+      <GameContainer>
+        <ChartArea
+          filename={gameKey}
+          dateColumn={gameDetails.dateColumn}
+          columns={gameDetails.columns}
+        />
+        <GuessingArea
+          gameDetails={gameDetails}
+          outcome={outcome}
+          setOutcome={setOutcome}
+        />
+      </GameContainer>
     </StyledMain>
   );
 }
