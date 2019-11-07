@@ -12,23 +12,14 @@ const GameContainer = styled.section`
   margin: 0 auto;
 `;
 
-const ChartContainer = styled.section`
-  padding: 1.5rem;
-  margin-bottom: 1.5rem;
-  background: #ffffff;
-  border: 4px solid ${props => props.theme.black};
-`;
-
 export default function ChartGame() {
   return (
     <GameContainer>
-      <ChartContainer>
-        <ChartArea
-          filename={gameKey}
-          dateColumn={gameDetails.dateColumn}
-          columns={gameDetails.columns}
-        />
-      </ChartContainer>
+      <ChartArea
+        filename={gameKey}
+        dateColumn={gameDetails.dateColumn}
+        columns={gameDetails.columns}
+      />
       <GuessingArea gameDetails={gameDetails} />
     </GameContainer>
   );

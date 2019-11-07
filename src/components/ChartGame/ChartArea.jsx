@@ -1,8 +1,10 @@
 import React, { useEffect, useState, useContext } from "react";
-
 import PropTypes from "prop-types";
 
 import styled, { ThemeContext } from "styled-components";
+
+import parse from "date-fns/parse";
+import format from "date-fns/format";
 
 import useAxios from "axios-hooks";
 import csv from "papaparse";
@@ -17,6 +19,12 @@ import {
 
 const DATA_PATH = "/data";
 
+const ChartContainer = styled.section`
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  background: #ffffff;
+  border: 4px solid ${props => props.theme.black};
+`;
 const TooltipBody = styled.div`
   background: #fff;
   border: 2px solid ${props => props.theme.black};
@@ -66,39 +74,54 @@ export default function ChartArea({ filename, dateColumn, columns }) {
         header: true,
         skipEmptyLines: true,
         transform: (value, columnName) =>
-          columnName !== dateColumn
-            ? parseFloat(value.replace("<", ""))
-            : value,
+          columnName === dateColumn
+            ? format(parse(value, "yyyy-MM", new Date()), "LLL yyyy")
+            : parseFloat(value.replace("<", "")),
         complete: (results, _) => setGraphData(results.data)
       });
     }
   }, [data, loading, dateColumn]);
 
   return (
-    <ResponsiveContainer width="100%" height={350}>
-      <LineChart data={graphData}>
-        {columns.map((column, idx) => (
-          <Line
-            key={column}
-            dataKey={column}
-            dot={false}
-            strokeWidth={4}
-            stroke={idx === 0 ? theme.secondaryColor : theme.tertiaryColor}
-            type="monotone"
+    <ChartContainer>
+      <ResponsiveContainer width="100%" height={350}>
+        <LineChart data={graphData}>
+          {columns.map((column, idx) => (
+            <Line
+              key={column}
+              dataKey={column}
+              dot={false}
+              strokeWidth={4}
+              stroke={idx === 0 ? theme.secondaryColor : theme.tertiaryColor}
+              type="monotone"
+            />
+          ))}
+          <XAxis
+            dataKey={dateColumn}
+            stroke={theme.gray}
+            angle={-30}
+            dy={15}
+            dx={-5}
+            height={50}
           />
-        ))}
-        <XAxis
-          dataKey={dateColumn}
-          stroke={theme.gray}
-          angle={-30}
-          dy={15}
-          dx={-5}
-          height={50}
-        />
-        <YAxis stroke={theme.gray} width={30} />
-        <Tooltip content={<CustomTooltip />} />
-      </LineChart>
-    </ResponsiveContainer>
+          <YAxis stroke={theme.gray} width={30} />
+          <Tooltip content={<CustomTooltip />} />
+        </LineChart>
+      </ResponsiveContainer>
+      <p style={{ marginBottom: 0, color: theme.gray }}>
+        <small>
+          Data source:{" "}
+          <a
+            href="https://www.google.com/trends"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ color: theme.gray }}
+          >
+            Google Trends
+          </a>
+        </small>
+      </p>
+    </ChartContainer>
   );
 }
 
