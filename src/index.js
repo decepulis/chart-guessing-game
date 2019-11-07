@@ -22,7 +22,7 @@ const initTheme = {
   secondaryColor: `hsl(${initHue + 120}, ${initSaturation}%, ${50}%)`,
   tertiaryColor: `hsl(${initHue - 120}, ${initSaturation}%, ${50}%)`,
   black: "#333",
-  gray: "#666"
+  gray: "#00000088"
 };
 
 const Index = () => (

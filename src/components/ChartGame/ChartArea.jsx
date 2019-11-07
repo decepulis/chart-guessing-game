@@ -75,8 +75,8 @@ export default function ChartArea({ filename, dateColumn, columns }) {
   }, [data, loading, dateColumn]);
 
   return (
-    <ResponsiveContainer width="100%" height={400}>
-      <LineChart width={600} height={300} data={graphData}>
+    <ResponsiveContainer width="100%" height={350}>
+      <LineChart data={graphData}>
         {columns.map((column, idx) => (
           <Line
             key={column}

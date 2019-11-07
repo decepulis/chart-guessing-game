@@ -3,8 +3,9 @@ import styled from "styled-components";
 import ChartGame from "./components/ChartGame";
 
 const StyledMain = styled.main`
-  min-width: 100vw;
-  min-height: 100vh;
+  width: 100vw;
+  min-height: 110vh;
+  padding: 0 0.5em;
   background-color: ${props => props.theme.primaryColor};
   color: ${props => props.theme.black};
 `;

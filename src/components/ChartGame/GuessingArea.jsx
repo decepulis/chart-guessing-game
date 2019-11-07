@@ -1,25 +1,37 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
+import HintArea from "./HintArea";
 
-const FormInput = styled.input`
-  flex: 1 1 auto;
+const HintSection = styled.div`
+  padding: 1em;
   border: 4px solid ${props => props.theme.black};
+  text-align: center;
 `;
-const FormRow = styled.div`
+
+const SubmitRow = styled.div`
   display: flex;
-  margin-bottom: 0.75rem;
+  flex-wrap: wrap;
 `;
-const FormButton = styled.button`
-  flex: 1 1 auto;
+const SubmitInput = styled.input`
+  border: 4px solid ${props => props.theme.black};
+  font-size: 1.25em;
+  padding: 0.5em;
+  flex: 4 0 275px;
+`;
+const SubmitButton = styled.button`
   background: white;
   border: 4px solid ${props => props.theme.black};
+  font-size: 1.25em;
+  padding: 0.5em;
+  flex: 1 0 auto;
 `;
 
 const GuessingArea = ({ gameDetails }) => {
   const [guess, setGuess] = useState("");
 
   const handleSubmit = e => {
+    console.log("submit");
     e.preventDefault();
   };
   const handleChangeGuess = e => {
@@ -28,23 +40,20 @@ const GuessingArea = ({ gameDetails }) => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <FormRow>
-        <FormInput
+      <HintSection>
+        <HintArea hints={gameDetails.hints} />
+      </HintSection>
+      <SubmitRow>
+        <SubmitInput
           placeholder="What search trend is this?"
           type="text"
           value={guess}
           onChange={handleChangeGuess}
         />
-      </FormRow>
-      <FormRow>
-        <FormButton>Submit</FormButton>
-        <FormButton>Give Up</FormButton>
-        <FormButton>Hint?</FormButton>
-      </FormRow>
-      <FormRow>
-        <h2>Hints</h2>
-        {/* {hints.map(hint => )} */}
-      </FormRow>
+        <SubmitButton type="submit">
+          {guess.length > 0 ? "Submit" : "Give Up"}
+        </SubmitButton>
+      </SubmitRow>
     </form>
   );
 };
