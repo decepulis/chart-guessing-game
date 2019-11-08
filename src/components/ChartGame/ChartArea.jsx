@@ -74,7 +74,7 @@ export default function ChartArea({ filename, dateColumn, columns }) {
           </LineChart>
         </ResponsiveContainer>
       )}
-      <p style={{ marginBottom: 0, color: theme.gray }}>
+      <p style={{ marginBottom: 0, color: theme.gray, userSelect: "text" }}>
         <small>
           Data source:{" "}
           <a

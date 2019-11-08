@@ -6,7 +6,7 @@ export const ChartContainer = styled.section`
   margin-bottom: 1.5rem;
   background: #ffffff;
   border: 4px solid ${props => props.theme.black};
-  height
+  user-select: none;
 `;
 
 const Square = styled.div`
