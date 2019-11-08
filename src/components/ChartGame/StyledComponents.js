@@ -26,6 +26,16 @@ export const H1 = styled.h1`
   font-size: 3rem;
   margin: 0;
 `;
+export const InvisibleButton = styled.button`
+  background: none;
+  color: inherit;
+  border: none;
+  padding: 0;
+  font: inherit;
+  outline: inherit;
+  all: unset;
+  cursor: pointer;
+`;
 
 export const SolutionBox = styled.div`
   align-items: center;
@@ -85,17 +95,18 @@ export const SubmitRow = styled.div`
 `;
 export const SubmitInput = styled.input`
   border: 4px solid ${props => props.theme.black};
+  border-radius: 0;
   font-size: 1.25em;
   padding: 0.5em;
   margin: 0;
   flex: 4 0 275px;
 `;
-export const SubmitButton = styled.button`
-  cursor: pointer;
+export const SubmitButton = styled(InvisibleButton)`
   background: white;
   border: 4px solid ${props => props.theme.black};
   font-size: 1.25em;
   padding: 0.5em;
   margin: 0;
   flex: 1 0 auto;
+  text-align: center;
 `;

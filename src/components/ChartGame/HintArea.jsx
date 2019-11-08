@@ -31,7 +31,7 @@ const HintArea = ({ hints }) => {
   };
 
   return (
-    <ButtonArea onClick={handleNewHint}>
+    <ButtonArea onClick={handleNewHint} disabled={hintDisabled}>
       <h2 style={{ marginTop: 0 }}>Hints</h2>
       {hints.slice(0, hintSlice).map((hint, idx) => (
         <p key={`hint-${idx}`} style={{ marginBottom: "0.25em" }}>
