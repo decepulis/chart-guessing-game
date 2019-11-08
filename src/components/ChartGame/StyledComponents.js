@@ -1,22 +1,24 @@
-import styled from "styled-components";
+import styled, { createGlobalStyle } from "styled-components";
+
+export const GlobalStyle = createGlobalStyle`
+  body {
+    background-color: ${props =>
+      props.gameOver ? "#fff" : props.theme.primaryColor};
+    transition: background-color: 0.1s ease-in-out;
+  }
+`;
 
 export const GameContainer = styled.section`
   max-width: 1024px;
   margin: 0 auto;
 `;
 
-// TODO: this background color would be nicer
-// if it were set on the body, not main.
 export const StyledMain = styled.main`
   width: 100vw;
   min-height: 100vh;
   padding: 0 0.5em;
+  margin: 1.5em 0;
   color: ${props => props.theme.black};
-  background-color: ${props => props.theme.primaryColor};
-  &.gameOver {
-    background-color: #fff;
-  }
-  transition: background-color: 0.1s ease-in-out;
 `;
 
 export const H1 = styled.h1`
@@ -52,7 +54,7 @@ export const SolutionBox = styled.div`
 
   opacity: 0;
   top: -100%;
-  left: -100;
+  left: -100%;
   transition: opacity 0.1s ease-in-out;
   &.visible {
     opacity: 1;

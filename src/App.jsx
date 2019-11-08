@@ -9,7 +9,8 @@ import {
   StyledMain,
   SolutionBox,
   SolutionText,
-  SmallBottomText
+  SmallBottomText,
+  GlobalStyle
 } from "./components/ChartGame/StyledComponents.js";
 
 import games, { selectRandomGame } from "./games";
@@ -22,39 +23,42 @@ function App() {
   const { hints, solutions, columns, dateColumn } = gameDetails;
 
   return (
-    <StyledMain className={!pending && "gameOver"}>
-      <GameContainer>
-        <GameHeader
-          total={score.total}
-          points={score.points}
-          correct={score.correct}
-          clearScore={() => {
-            dispatchScore({ type: "clear" });
-          }}
-        />
-        <ChartArea
-          filename={gameKey}
-          dateColumn={dateColumn}
-          columns={columns}
-        />
-        <GuessingArea
-          hints={hints}
-          solutions={solutions}
-          setOutcome={setOutcome}
-          dispatchScore={dispatchScore}
-        />
-        <SolutionBox
-          className={!pending && "visible"}
-          success={success}
-          onClick={() => {
-            window.location.reload();
-          }}
-        >
-          <SolutionText>{solutions[0]}</SolutionText>
-          <SmallBottomText>click to continue</SmallBottomText>
-        </SolutionBox>
-      </GameContainer>
-    </StyledMain>
+    <>
+      <GlobalStyle gameOver={!pending} />
+      <StyledMain>
+        <GameContainer>
+          <GameHeader
+            total={score.total}
+            points={score.points}
+            correct={score.correct}
+            clearScore={() => {
+              dispatchScore({ type: "clear" });
+            }}
+          />
+          <ChartArea
+            filename={gameKey}
+            dateColumn={dateColumn}
+            columns={columns}
+          />
+          <GuessingArea
+            hints={hints}
+            solutions={solutions}
+            setOutcome={setOutcome}
+            dispatchScore={dispatchScore}
+          />
+          <SolutionBox
+            className={!pending && "visible"}
+            success={success}
+            onClick={() => {
+              window.location.reload();
+            }}
+          >
+            <SolutionText>{solutions[0]}</SolutionText>
+            <SmallBottomText>click to continue</SmallBottomText>
+          </SolutionBox>
+        </GameContainer>
+      </StyledMain>
+    </>
   );
 }
 

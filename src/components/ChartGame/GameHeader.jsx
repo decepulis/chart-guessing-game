@@ -9,7 +9,7 @@ const GameHeader = ({ total, points, correct, clearScore }) => {
   }, [clearScore]);
 
   return (
-    <header style={{ textAlign: "center", padding: "1.5em 0" }}>
+    <header style={{ textAlign: "center", margin: "0 0 1.5em" }}>
       <H1>Page Title!</H1>
       <p style={{ margin: 0 }}>
         <small>Guess the search trend in the chart below.</small>

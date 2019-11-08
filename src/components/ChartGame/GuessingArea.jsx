@@ -35,7 +35,7 @@ const GuessingArea = ({ hints, solutions, setOutcome, dispatchScore }) => {
     setPoints(points - 1);
   };
   return (
-    <section style={{ paddingBottom: "1.5em" }}>
+    <section style={{ marginBottom: "1.5em" }}>
       <HintArea hints={hints} decrementPoints={decrementPoints} />
       <form onSubmit={handleSubmit}>
         <SubmitRow>
