@@ -36,7 +36,6 @@ const GuessingArea = ({ hints, solutions, setOutcome, dispatchScore }) => {
       <form onSubmit={handleSubmit}>
         <SubmitRow>
           <SubmitInput
-            autoFocus
             placeholder="What search trend is this?"
             type="text"
             value={guess}
