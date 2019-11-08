@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 
 import useScore from "./utilities/useScore.js";
+import GameHeader from "./components/ChartGame/GameHeader";
 import ChartArea from "./components/ChartGame/ChartArea";
 import GuessingArea from "./components/ChartGame/GuessingArea";
 import {
   GameContainer,
   StyledMain,
-  H1,
   SolutionBox,
   SolutionText,
   SmallBottomText
@@ -15,14 +15,8 @@ import {
 import games, { selectRandomGame } from "./games";
 const [gameKey, gameDetails] = selectRandomGame(games);
 
-const initialScore = {
-  points: 0,
-  total: 0,
-  correct: 0
-};
-
 function App() {
-  const [score, dispatchScore] = useScore(initialScore);
+  const [score, dispatchScore] = useScore();
   const [outcome, setOutcome] = useState([true, false]);
   const [pending, success] = outcome;
   const { hints, solutions, columns, dateColumn } = gameDetails;
@@ -30,22 +24,14 @@ function App() {
   return (
     <StyledMain className={!pending && "gameOver"}>
       <GameContainer>
-        <header style={{ textAlign: "center", padding: "1.5em 0" }}>
-          <H1>Page Title!</H1>
-          <p style={{ margin: 0 }}>
-            <small>Guess the search trend in the chart below.</small>
-          </p>
-          <p style={{ margin: 0 }}>
-            {score.total > 0 ? (
-              <small>
-                {score.points}|
-                {((100 * score.correct) / score.total).toFixed(2)}%
-              </small>
-            ) : (
-              <small>&nbsp;</small>
-            )}
-          </p>
-        </header>
+        <GameHeader
+          total={score.total}
+          points={score.points}
+          correct={score.correct}
+          clearScore={() => {
+            dispatchScore({ type: "clear" });
+          }}
+        />
         <ChartArea
           filename={gameKey}
           dateColumn={dateColumn}
