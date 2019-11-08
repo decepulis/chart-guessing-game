@@ -9,6 +9,7 @@ const SUCCESS_THRESHOLD = 0.66;
 
 const GuessingArea = ({ hints, solutions, setOutcome, dispatchScore }) => {
   const [guess, setGuess] = useState("");
+  const [points, setPoints] = useState(3);
 
   const handleSubmit = e => {
     e.preventDefault();
@@ -21,7 +22,7 @@ const GuessingArea = ({ hints, solutions, setOutcome, dispatchScore }) => {
 
     if (rating > SUCCESS_THRESHOLD) {
       setOutcome([false, true]);
-      dispatchScore({ type: "correct", points: 1 });
+      dispatchScore({ type: "correct", points });
     } else {
       setOutcome([false, false]);
       dispatchScore({ type: "incorrect" });
@@ -30,9 +31,12 @@ const GuessingArea = ({ hints, solutions, setOutcome, dispatchScore }) => {
   const handleChangeGuess = e => {
     setGuess(e.target.value);
   };
+  const decrementPoints = () => {
+    setPoints(points - 1);
+  };
   return (
     <section style={{ paddingBottom: "1.5em" }}>
-      <HintArea hints={hints} />
+      <HintArea hints={hints} decrementPoints={decrementPoints} />
       <form onSubmit={handleSubmit}>
         <SubmitRow>
           <SubmitInput
@@ -43,7 +47,17 @@ const GuessingArea = ({ hints, solutions, setOutcome, dispatchScore }) => {
             onChange={handleChangeGuess}
           />
           <SubmitButton type="submit">
-            {guess.length > 0 ? "Submit" : "Give Up"}
+            {guess.length > 0 ? (
+              <>
+                <div>Submit</div>
+                <small>{`${points} point${points > 1 ? "s" : ""}`}</small>
+              </>
+            ) : (
+              <>
+                <div>Give Up</div>
+                <small>0 points</small>
+              </>
+            )}
           </SubmitButton>
         </SubmitRow>
       </form>

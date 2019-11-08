@@ -20,7 +20,7 @@ const GraySmall = styled.small`
   color: ${props => props.theme.gray};
 `;
 
-const HintArea = ({ hints }) => {
+const HintArea = ({ hints, decrementPoints }) => {
   const [hintSlice, setHintSlice] = useState(1);
   const [hintDisabled, setHintDisabled] = useState(false);
 
@@ -28,6 +28,7 @@ const HintArea = ({ hints }) => {
     e.preventDefault();
     setHintDisabled(hintSlice + 1 >= hints.length);
     setHintSlice(hintSlice + 1);
+    decrementPoints();
   };
 
   return (
@@ -49,7 +50,7 @@ const HintArea = ({ hints }) => {
 
 HintArea.propTypes = {
   hints: PropTypes.array.isRequired,
-  container: PropTypes.object
+  decrementPoints: PropTypes.func.isRequired
 };
 
 export default HintArea;
