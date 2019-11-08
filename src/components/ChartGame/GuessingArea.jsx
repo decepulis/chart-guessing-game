@@ -2,28 +2,20 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import stringSimilarity from "string-similarity";
 
-import {
-  SubmitRow,
-  SubmitInput,
-  SubmitButton,
-  SolutionBox,
-  SolutionText
-} from "./GuessingArea.module";
+import { SubmitRow, SubmitInput, SubmitButton } from "./StyledComponents";
 import HintArea from "./HintArea";
 
 const SUCCESS_THRESHOLD = 0.66;
 
-const GuessingArea = ({ gameDetails, outcome, setOutcome, dispatchScore }) => {
-  const { hints, solutions } = gameDetails;
+const GuessingArea = ({ hints, solutions, setOutcome, dispatchScore }) => {
   const [guess, setGuess] = useState("");
-  const [pending, success] = outcome;
 
   const handleSubmit = e => {
     e.preventDefault();
 
     const similarity = stringSimilarity.findBestMatch(
       guess.toLowerCase(),
-      gameDetails.solutions.map(solution => solution.toLowerCase())
+      solutions.map(solution => solution.toLowerCase())
     );
     const { rating } = similarity.bestMatch;
 
@@ -55,29 +47,15 @@ const GuessingArea = ({ gameDetails, outcome, setOutcome, dispatchScore }) => {
           </SubmitButton>
         </SubmitRow>
       </form>
-      <SolutionBox
-        className={!pending && "visible"}
-        success={success}
-        onClick={() => {
-          window.location.reload();
-        }}
-      >
-        <SolutionText>{solutions[0]}</SolutionText>
-      </SolutionBox>
     </section>
   );
 };
 
 GuessingArea.propTypes = {
-  outcome: PropTypes.array.isRequired,
+  hints: PropTypes.array.isRequired,
+  solutions: PropTypes.array.isRequired,
   setOutcome: PropTypes.func.isRequired,
-  dispatchScore: PropTypes.func.isRequired,
-  gameDetails: PropTypes.shape({
-    dateColumn: PropTypes.string.isRequired,
-    columns: PropTypes.array.isRequired,
-    solutions: PropTypes.array.isRequired,
-    hints: PropTypes.array.isRequired
-  }).isRequired
+  dispatchScore: PropTypes.func.isRequired
 };
 
 export default GuessingArea;

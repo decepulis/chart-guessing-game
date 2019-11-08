@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext } from "react";
 import PropTypes from "prop-types";
 
-import styled, { ThemeContext } from "styled-components";
+import { ThemeContext } from "styled-components";
 
 import parse from "date-fns/parse";
 import format from "date-fns/format";
@@ -16,46 +16,10 @@ import {
   YAxis,
   Tooltip
 } from "recharts";
+import { ChartContainer, CustomTooltip } from "./ChartArea.module";
 
 const DATA_PATH = "/data";
-
-const ChartContainer = styled.section`
-  padding: 1.5rem;
-  margin-bottom: 1.5rem;
-  background: #ffffff;
-  border: 4px solid ${props => props.theme.black};
-`;
-const TooltipBody = styled.div`
-  background: #fff;
-  border: 2px solid ${props => props.theme.black};
-  padding: 0 1em;
-`;
-const Square = styled.div`
-  display: inline-block;
-  position: relative;
-  width: 1rem;
-  height: 1rem;
-  bottom: -0.125rem;
-  background: ${props => (props.background ? props.background : "black")};
-`;
-const CustomTooltip = ({ active, payload, label }) => {
-  if (active) {
-    return (
-      <TooltipBody>
-        <div style={{ margin: "0.25em 0" }}>
-          <b>{label}</b>
-        </div>
-        {payload.map(series => (
-          <div key={series.dataKey} style={{ margin: "0.25em 0" }}>
-            <Square background={series.stroke} /> {series.value}
-          </div>
-        ))}
-      </TooltipBody>
-    );
-  }
-
-  return null;
-};
+const CHART_HEIGHT = 350;
 
 export default function ChartArea({ filename, dateColumn, columns }) {
   const theme = useContext(ThemeContext);
@@ -63,9 +27,7 @@ export default function ChartArea({ filename, dateColumn, columns }) {
   const [{ data, loading, error }] = useAxios(`${DATA_PATH}/${filename}.csv`);
 
   useEffect(() => {
-    if (error) {
-      console.error(error);
-    }
+    error && console.error(error);
   }, [error]);
 
   useEffect(() => {
@@ -76,7 +38,7 @@ export default function ChartArea({ filename, dateColumn, columns }) {
         transform: (value, columnName) =>
           columnName === dateColumn
             ? format(parse(value, "yyyy-MM", new Date()), "LLL yyyy")
-            : parseFloat(value.replace("<", "")),
+            : parseInt(value.replace("<", "")),
         complete: (results, _) => setGraphData(results.data)
       });
     }
@@ -84,8 +46,10 @@ export default function ChartArea({ filename, dateColumn, columns }) {
 
   return (
     <ChartContainer>
-      {graphData.length > 0 && (
-        <ResponsiveContainer width="100%" height={350}>
+      {graphData.length === 0 ? (
+        <div style={{ height: `${CHART_HEIGHT}px` }}></div>
+      ) : (
+        <ResponsiveContainer width="100%" height={CHART_HEIGHT}>
           <LineChart data={graphData}>
             {columns.map((column, idx) => (
               <Line
