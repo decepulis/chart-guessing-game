@@ -23,8 +23,6 @@ export const SolutionBox = styled.div`
   align-items: center;
   justify-content: center;
   position: fixed;
-  top: 0;
-  left: 0;
   width: 100%;
   height: 100%;
   display: flex;
@@ -32,13 +30,16 @@ export const SolutionBox = styled.div`
   background-color: ${props =>
     props.success ? `hsla(120,100%,85%,0.8)` : `hsla(0,100%,85%,0.8)`};
 
-  pointer-events: ${props => (props.acceptsClicks ? "auto" : "none")};
   cursor: pointer;
 
   opacity: 0;
+  top: -100%;
+  left: -100;
   transition: opacity 0.1s ease-in-out;
   &.visible {
     opacity: 1;
+    top: 0;
+    left: 0;
   }
 
   &.visible span {

@@ -57,7 +57,6 @@ const GuessingArea = ({ gameDetails, outcome, setOutcome, dispatchScore }) => {
       </form>
       <SolutionBox
         className={!pending && "visible"}
-        acceptsClicks={!pending}
         success={success}
         onClick={() => {
           window.location.reload();

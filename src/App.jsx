@@ -12,6 +12,8 @@ const GameContainer = styled.section`
   margin: 0 auto;
 `;
 
+// TODO: this background color would be nicer
+// if it were set on the body, not main.
 const StyledMain = styled.main`
   width: 100vw;
   min-height: 100vh;
@@ -71,14 +73,16 @@ function App() {
           <p style={{ margin: 0 }}>
             <small>Guess the search trend in the chart below.</small>
           </p>
-          {score.total > 0 && (
-            <p style={{ margin: 0 }}>
+          <p style={{ margin: 0 }}>
+            {score.total > 0 ? (
               <small>
                 {score.points}|
                 {((100 * score.correct) / score.total).toFixed(2)}%
               </small>
-            </p>
-          )}
+            ) : (
+              <small>&nbsp;</small>
+            )}
+          </p>
         </header>
         <ChartArea
           filename={gameKey}
