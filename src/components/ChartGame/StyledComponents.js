@@ -72,9 +72,18 @@ export const SolutionText = styled.span`
   font-family: "Playfair Display", serif;
   font-weight: 900;
   font-style: italic;
-  font-size: 10rem;
-  @media only screen and (max-width: 575px) {
-    font-size: 20vw;
+
+  & .solution {
+    font-size: 10rem;
+    @media only screen and (max-width: 575px) {
+      font-size: 20vw;
+    }
+  }
+  & .correct {
+    font-size: 4rem;
+    @media only screen and (max-width: 575px) {
+      font-size: 8vw;
+    }
   }
 
   transition: transform 0.2s ease-in-out, opacity 0.1s ease-in-out;
@@ -89,6 +98,20 @@ export const SmallBottomText = styled.small`
   position: fixed;
   bottom: 1rem;
   color: ${props => props.theme.gray};
+  text-align: center;
+`;
+export const SmallBottomPulsingText = styled(SmallBottomText)`
+  @keyframes pulse {
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.5;
+    }
+  }
+
+  animation: pulse 1s infinite;
 `;
 
 export const SubmitRow = styled.div`

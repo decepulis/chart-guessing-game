@@ -9,7 +9,7 @@ import {
   StyledMain,
   SolutionBox,
   SolutionText,
-  SmallBottomText,
+  SmallBottomPulsingText,
   GlobalStyle
 } from "./components/ChartGame/StyledComponents.js";
 
@@ -53,8 +53,13 @@ function App() {
               window.location.reload();
             }}
           >
-            <SolutionText>{solutions[0]}</SolutionText>
-            <SmallBottomText>click to continue</SmallBottomText>
+            <SolutionText>
+              <div className="solution">{solutions[0]}</div>
+              <div className="correct">
+                ({success ? "Correct!" : "Incorrect!"})
+              </div>
+            </SolutionText>
+            <SmallBottomPulsingText>click to continue</SmallBottomPulsingText>
           </SolutionBox>
         </GameContainer>
       </StyledMain>
